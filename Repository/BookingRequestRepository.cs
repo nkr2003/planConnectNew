@@ -17,8 +17,8 @@ namespace EventManagement.Repository
 
         public async Task<List<BookingRequest>> ByFilter_status(string status)
         {
-            var model = await _context.BookingRequests.Where(a=> a.BookingStatus== status).ToListAsync();
-            if(model == null)
+            var model = await _context.BookingRequests.Where(a => a.BookingStatus == status).ToListAsync();
+            if (model == null)
             {
                 return null;
             }
@@ -34,25 +34,25 @@ namespace EventManagement.Repository
 
         public async Task<BookingRequest> DeleteBookingRequestById(int id)
         {
-            var model=await _context.BookingRequests.FirstOrDefaultAsync(a => a.BookingId == id);
+            var model = await _context.BookingRequests.FirstOrDefaultAsync(a => a.BookingId == id);
             if (model == null)
             {
                 return null;
             }
-            
+
             _context.BookingRequests.Remove(model);
             await _context.SaveChangesAsync();
             return model;
-            
-            
-            
+
+
+
         }
 
-        public async Task<List<BookingRequest>> FilterByDate(int month,int year)
+        public async Task<List<BookingRequest>> FilterByDate(int month, int year)
         {
-            var model=await _context.BookingRequests.Where(a=> a.BookingDate.Month == month && a.BookingDate.Year==year).ToListAsync();
+            var model = await _context.BookingRequests.Where(a => a.BookingDate.Month == month && a.BookingDate.Year == year).ToListAsync();
 
-            if(model == null)
+            if (model == null)
             {
                 return null;
             }
@@ -70,27 +70,52 @@ namespace EventManagement.Repository
 
         public async Task<BookingRequest> GetBookingRequest(int id)
         {
-           var getBookingRequest=await _context.BookingRequests.FirstOrDefaultAsync(a => a.BookingId==id);
+            var getBookingRequest = await _context.BookingRequests.FirstOrDefaultAsync(a => a.BookingId == id);
             if (getBookingRequest == null)
             {
                 return null;
             }
             return getBookingRequest;
-                
+
+
         }
+
+        // public async Task<List<BookingRequest>> GetBookingRequestsByUserId(int userId)
+        // {
+        //     // Fetch all bookings where the UserId matches
+        //     var bookings = await _context.BookingRequests
+        //                                  .Where(br => br.UserId == userId)
+        //                                  .ToListAsync();
+
+        //     // You’ll get an empty list if none found
+        //     return bookings;
+        // }
 
         public async Task<BookingRequest> UpdateBookingRequest(BookingRequest bookingRequest)
         {
             var updatingBookingRequest = await _context.BookingRequests.FindAsync(bookingRequest.BookingId);
             if (updatingBookingRequest == null) return null;
             // updatingBookingRequest.BookingDescription = bookingRequest.BookingDescription;
-            
+
             updatingBookingRequest.ExpectedAmount = bookingRequest.ExpectedAmount;
+            updatingBookingRequest.BookingId = bookingRequest.BookingId;
+            updatingBookingRequest.BookingDate = bookingRequest.BookingDate;
+            updatingBookingRequest.BookingStatus = bookingRequest.BookingStatus;
 
             await _context.SaveChangesAsync();
             return updatingBookingRequest;
 
 
+        }
+
+        async Task<IEnumerable<BookingRequest>> IBookingRequest.GetBookingRequestsByUserId(int userId)
+        {
+             var bookings = await _context.BookingRequests
+                                         .Where(br => br.UserId == userId)
+                                         .ToListAsync();
+
+            // You’ll get an empty list if none found
+            return bookings;
         }
     }
 }

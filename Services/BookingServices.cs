@@ -25,6 +25,17 @@ namespace EventManagement.services
             var model1 = _mapper.Map<CreateBookingDto>(model);
             return model1;
         }
+        // public async Task<IEnumerable<CreateBookingDto>> GetBookingRequestsByUserId(int userId)
+        // {
+        //     // CORRECT: invoke the method on the DbContext, not on the interface type
+        //     // return await _repository.BookingRequests
+        //     //     .Where(br => br.UserId == userId)
+        //     //     .ProjectTo<CreateBookingDto>(_mapper.ConfigurationProvider)
+        //     //     .ToListAsync();
+
+
+        //     return null;
+        // }
 
         public async Task<CreateBookingDto> Delete(int id)
         {
@@ -76,6 +87,6 @@ namespace EventManagement.services
             return model1;
         }
 
-       
+
     }
 }

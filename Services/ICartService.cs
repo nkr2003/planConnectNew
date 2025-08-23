@@ -12,7 +12,7 @@ namespace EventManagement.Services
         IEnumerable<Vendor> GetVendors(int eventId);
 
         IEnumerable<VendorService> GetVendorServicesAll();
-        VendorService GetVendorServicesById(int id);
+       Task<IEnumerable<VendorService>> GetVendorServicesByVendorId(int vendorId);
         IEnumerable<VendorService> GetVendorServicesByEventId(int eventId);
     }
 }

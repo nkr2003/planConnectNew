@@ -56,6 +56,11 @@ namespace EventManagement.Controllers.AuthModule
                 return NotFound($"No user found with this email {loginDto.Email}");
             }
 
+            if (user.PasswordHash != loginDto.PasswordHash)
+            {
+                return Unauthorized("Invalid password");
+            }
+
 
             var acessToken = _tokenService.GenerateJwtToken(user);
             var refreshToken = _tokenService.GenerateRefreshToken();
@@ -71,7 +76,8 @@ namespace EventManagement.Controllers.AuthModule
                     AccessToken = acessToken,
                     RefreshToken = refreshToken,
                     AccessTokenExpiration = accessTokenExpirationTime,
-                    RefreshTokenExpiration =   refreshTokenExpirationTime,
+                    RefreshTokenExpiration = refreshTokenExpirationTime,
+                    UserId = user.UserId 
                 });
         }
 

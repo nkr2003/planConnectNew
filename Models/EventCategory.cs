@@ -5,6 +5,7 @@ using System.Numerics;
 
 public class EventCategory
 {
+    [Key]
     public int EventCategoryId { get; set; }
 
     [Required]

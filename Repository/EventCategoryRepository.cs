@@ -28,7 +28,7 @@ namespace EventManagement.Repository
             {
                 return null;
             }
-            eventCategory.IsDeleted = true;
+             _context.EventCategories.Remove(eventCategory);
             await _context.SaveChangesAsync();
             return eventCategory;
         }

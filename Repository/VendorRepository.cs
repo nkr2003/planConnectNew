@@ -16,6 +16,15 @@ namespace EventManagement.Repository
             _context = context;
         }
 
+public async Task<Vendor> GetVendorByNameAsync(string name)
+{
+    return await _context.Vendors
+                        .Where(v => v.IsActive)
+                        .FirstOrDefaultAsync(v => v.Name.ToLower() == name.ToLower());
+}
+
+
+
         public async Task<Vendor> AddVendorAsync(Vendor vendor)
         {
             _context.Vendors.Add(vendor);
@@ -47,9 +56,10 @@ namespace EventManagement.Repository
         public async Task<bool> DeleteVendorAsync(int id)
         {
             var vendor = await _context.Vendors.FindAsync(id);
-            if (vendor == null) return false;
+            if (vendor == null) 
+            return false;
 
-            vendor.IsActive = false;
+            _context.Vendors.Remove(vendor); 
             await _context.SaveChangesAsync();
             return true;
         }

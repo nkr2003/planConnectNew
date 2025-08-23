@@ -22,7 +22,7 @@ namespace EventManagement.Services
 
         public async Task<EventCategory> GetEventById(int id)
         {
-            return  _context.EventCategories.FirstOrDefault(e => e.EventCategoryId == id);
+            return _context.EventCategories.FirstOrDefault(e => e.EventCategoryId == id);
         }
 
         public IEnumerable<Vendor> GetVendorsAll()
@@ -30,9 +30,9 @@ namespace EventManagement.Services
             return _context.Vendors.ToList();
         }
 
-        public IEnumerable<Vendor> GetVendors(int vendorId)
+        public IEnumerable<Vendor> GetVendors(int EventCategoryId)
         {
-            return _context.Vendors.Where(v => v.VendorId == vendorId).ToList();
+            return _context.Vendors.Where(v => v.EventCategoryId == EventCategoryId).ToList();
         }
 
         public IEnumerable<VendorService> GetVendorServicesAll()
@@ -40,16 +40,18 @@ namespace EventManagement.Services
             return _context.VendorServices.ToList();
         }
 
-        public VendorService GetVendorServicesById(int id)
+        public async Task<IEnumerable<VendorService>> GetVendorServicesByVendorId(int vendorId)
         {
-            return _context.VendorServices
-                                          .FirstOrDefault(vs => vs.VendorServicesId == id);
+            return await _context.VendorServices
+                                 .Where(vs => vs.VendorId == vendorId)
+                                 .ToListAsync();
         }
+
 
         public IEnumerable<VendorService> GetVendorServicesByEventId(int vendorId)
         {
             return _context.VendorServices
-                          
+
                            .Where(vs => vs.Vendor.VendorId == vendorId)
                            .ToList();
         }

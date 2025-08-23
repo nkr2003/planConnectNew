@@ -2,21 +2,8 @@
 {
     public class UpdateBookingDto
     {
-       
-        public int BookingId { get; set; } 
-        public int UserId { get; set; }
-        // public User User { get; set; }//navigation 
-
-        public int VendorId { get; set; }
-        //public Vendor Vendor { get; set; }//navigation
-        //public double BookingAmount { get; set; }
-        public double UserExpectedAmount { get; set; }
-        public string BookingDescription { get; set; }
-      
-
-       
-
-
-        
+        public int BookingId { get; set; } // required to identify record
+        public double ExpectedAmount { get; set; }
+        public string BookingStatus { get; set; } // Pending, Confirmed, Cancelled
     }
 }

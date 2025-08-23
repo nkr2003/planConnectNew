@@ -12,6 +12,7 @@ namespace EventManagement.Interface.Repository
         Task<BookingRequest> GetBookingRequest(int id);
 
         Task<List<BookingRequest>> ByFilter_status(string status);
+        Task<IEnumerable<BookingRequest>> GetBookingRequestsByUserId(int userId);
 
         Task<List<BookingRequest>> FilterByDate(int month,int year);
     }

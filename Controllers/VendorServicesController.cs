@@ -66,7 +66,7 @@ namespace EventManagement.Controllers.AdminDashboardModule
             }
 
             [HttpDelete("delete/{id}")]
-            public async Task<IActionResult> DeleteVendorService(int id)
+            public async Task<IActionResult> DeleteVendorService ([FromRoute] int id)
             {
                 var success = await _vendorServicesRepository.DeleteVendorServiceAsync(id);
                 if (!success)

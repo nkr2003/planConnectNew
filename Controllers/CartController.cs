@@ -60,14 +60,15 @@ namespace EventManagement.Controllers
 
         // GET: api/cart/vendorservices/{id}
         [HttpGet("vendorservices/{id}")]
-        public IActionResult GetVendorServicesById(int id)
+        public async Task<IActionResult> GetVendorServicesById(int id)
         {
-            var service = _cartService.GetVendorServicesById(id);
-            if (service == null)
+            var service = await _cartService.GetVendorServicesByVendorId(id);
+            if (!service.Any())
                 return NotFound($"No vendor service found with ID {id}");
 
             return Ok(service);
         }
+
 
         // GET: api/cart/vendorservices/byevent/{eventId}
         [HttpGet("vendorservices/byevent/{eventId}")]

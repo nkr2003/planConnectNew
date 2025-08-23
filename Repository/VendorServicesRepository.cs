@@ -24,7 +24,7 @@ namespace EventManagement.Repository
         public async Task<IEnumerable<VendorService>> GetAllVendorServicesAsync()
         {
             return await _context.VendorServices.Where(e=>e.IsDeleted==false)
-                .Include(v => v.Vendor)
+                // .Include(v => v.Vendor)
                 .ToListAsync();
         }
 
@@ -43,14 +43,16 @@ namespace EventManagement.Repository
             return service;
         }
 
-        public async Task<bool> DeleteVendorServiceAsync(int id)
-        {
-            var service = await _context.VendorServices.FindAsync(id);
-            if (service == null) return false;
+       public async Task<bool> DeleteVendorServiceAsync(int id)
+{
+    var service = await _context.VendorServices
+        .FirstOrDefaultAsync(s => s.VendorServicesId == id);
 
-            service.IsDeleted = true;
-            await _context.SaveChangesAsync();
-            return true;
-        }
+    if (service == null) return false;
+
+    _context.VendorServices.Remove(service);
+    await _context.SaveChangesAsync();
+    return true;
+}
     }
 }

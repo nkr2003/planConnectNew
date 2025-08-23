@@ -10,7 +10,7 @@ namespace EventManagement.Interface.services
         Task<CreateBookingDto> Delete(int id);
         Task<CreateBookingDto> CreateBookingRequest(CreateBookingDto createBookingDto);
         Task<CreateBookingDto> GetBookingRequestById(int id);
-
+        // Task<IEnumerable<CreateBookingDto>> GetBookingRequestsByUserId(int userId);
         Task<List<CreateBookingDto>> GetByFilter(string status);
 
         Task<List<CreateBookingDto>> GetByDate(int month,int year);
